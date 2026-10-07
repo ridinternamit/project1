@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Python Quiz</title>
+
+<style>
+    .result-box {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #f5f7fa;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.total {
+    background: #e6f0ff;
+    color: #007bff;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.wrong {
+    background: #ffe6e6;
+    color: #dc3545;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+body {
+    font-family: Arial;
+    background: linear-gradient(to right, #4facfe, #00f2fe);
+}
+
+.container {
+    width: 75%;
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.question {
+    background: #f1f8ff;
+    border-left: 5px solid #007bff;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+}
+
+.question p {
+    font-weight: bold;
+    color: #222;
+}
+.title-box {
+    text-align: center;
+    background: #160959;
+    color: #00ffcc;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #00ffcc;
+    font-size: 28px;
+}
+
+label {
+    display: block;
+    padding: 6px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+label:hover {
+    background: #e0f0ff;
+}
+
+.btn {
+    padding: 12px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.submit { background: #28a745; }
+.result { background: #007bff; }
+
+.result-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: #eef;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+<h1 class="title-box">🐍 Python MCQ Quiz</h1>
+
+<div id="quiz"></div>
+
+<button class="btn submit" onclick="submitExam()">Submit Exam</button>
+<button class="btn result" onclick="showResult()">Check Result</button>
+
+<div class="result-box" id="result"></div>
+
+</div>
+
+<script>
+
+const questions = [
+["What type of language is Python?", "A. Compiled", "B. Interpreted", "C. Machine", "D. Assembly", "B"],
+["Which function is used to display output?", "A. input()", "B. print()", "C. show()", "D. display()", "B"],
+["How do you declare a variable?", "A. int x=10", "B. x=10", "C. var x", "D. declare x", "B"],
+["Which symbol is used for comments?", "A. //", "B. #", "C. /* */", "D. <!-- -->", "B"],
+["Which data type is immutable?", "A. List", "B. Dictionary", "C. Tuple", "D. Set", "C"],
+["Which bracket is used for List?", "A. ()", "B. {}", "C. []", "D. <>", "C"],
+["What does len() do?", "A. Adds values", "B. Finds length", "C. Deletes value", "D. None", "B"],
+["Which keyword is used for function?", "A. func", "B. define", "C. def", "D. function", "C"],
+["Which loop runs until condition is true?", "A. for", "B. while", "C. do-while", "D. none", "B"],
+["Which keyword is used for condition?", "A. check", "B. if", "C. loop", "D. case", "B"],
+["Which is Boolean type?", "A. int", "B. bool", "C. str", "D. list", "B"],
+["Which function takes user input?", "A. scan()", "B. input()", "C. get()", "D. read()", "B"],
+["Which method adds element in list?", "A. add()", "B. push()", "C. append()", "D. insert()", "C"],
+["Which method removes element?", "A. pop()", "B. delete()", "C. remove()", "D. both A & C", "D"],
+["Which is correct file extension?", "A. .java", "B. .py", "C. .html", "D. .js", "B"],
+["Which operator is used for power?", "A. ^", "B. **", "C. //", "D. %", "B"],
+["Which keyword is used for else-if?", "A. elseif", "B. elif", "C. else if", "D. ifelse", "B"],
+["Which structure stores key-value pairs?", "A. List", "B. Tuple", "C. Dictionary", "D. Set", "C"],
+["Which function converts string to int?", "A. str()", "B. int()", "C. float()", "D. bool()", "B"],
+["Which loop is best for fixed iterations?", "A. while", "B. for", "C. do", "D. none", "B"]
+];
+
+let right = 0;
+let wrong = 0;
+
+let quizDiv = document.getElementById("quiz");
+
+questions.forEach((q, index) => {
+    let html = `<div class="question">
+    <p>${index+1}. ${q[0]}</p>`;
+
+    for(let i=1;i<=4;i++){
+        html += `<label><input type="radio" name="q${index}" value="${q[i][0]}"> ${q[i]}</label>`;
+    }
+
+    html += `</div>`;
+    quizDiv.innerHTML += html;
+});
+
+function submitExam(){
+    right = 0;
+    wrong = 0;
+
+    questions.forEach((q, index)=>{
+        let options = document.getElementsByName("q"+index);
+        let ans = "";
+
+        options.forEach(o=>{
+            if(o.checked) ans = o.value.toUpperCase();
+        });
+
+        if(ans === q[5]) right += 4;
+        else wrong++;
+    });
+
+    alert("Test Submitted ✅");
+}
+function showResult(){
+    let total = right ;
+
+    document.getElementById("result").innerHTML =
+    `
+    <div class="result-box">
+        <div class="total">🎯 Total Marks: ${total}</div>
+        <div class="right">✅ Right Answers: ${right}</div>
+        <div class="wrong">❌ Wrong Answers: ${wrong}</div>
+    </div>
+    `;
+}
+
+for(let key in answers){
+    let userAns = document.querySelector(`input[name=${key}]:checked`);
+    
+    if(userAns){
+        if(userAns.value === answers[key]){
+            right++;
+        } else {
+            wrong++;
+        }
+    }
+}
+
+
+
+</script>
+
+</body>
+</html>
